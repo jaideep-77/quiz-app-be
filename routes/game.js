@@ -5,9 +5,19 @@ const axios = require('axios');
 router.use(express.json());
 
 router.get('/questions', async (req, res) => {
+    questions = [];
     try {
         const response = await axios.get(`https://opentdb.com/api.php?amount=10&category=${req.query.topic}&difficulty=${req.query.difficulty}&type=multiple`);
-        res.send(response.data.results);
+        response.data.results.map((result, index) => {
+            const question = {
+                id: index,
+                question: result.question,
+                choices: [result.correct_answer, result.incorrect_answers[0], result.incorrect_answers[1], result.incorrect_answers[2]],
+                answer: result.correct_answer
+            }
+            questions.push(question);
+        })
+        res.send(questions);
     } catch (error) {
         console.log(error.message);
         res.json({ message: 'Error occured' });
