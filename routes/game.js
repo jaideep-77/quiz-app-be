@@ -13,7 +13,8 @@ router.get('/questions', async (req, res) => {
                 id: index,
                 question: result.question,
                 choices: [result.correct_answer, result.incorrect_answers[0], result.incorrect_answers[1], result.incorrect_answers[2]],
-                answer: result.correct_answer
+                answer: result.correct_answer,
+                selected: null
             }
             questions.push(question);
         })

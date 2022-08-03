@@ -8,14 +8,13 @@ const verifyToken = async (req, res, next) => {
 
         if (validToken) {
             console.log('Authenticated');
-            console.log(token);
             next();
         } else {
-            res.json({ message: 'Unvalid token' });
+            res.sendStatus(403);
         }
     } catch (err) {
         console.log(err.message);
-        res.json({ message: 'Error occured during authentication' });
+        res.sendStatus(403);
     }
 }
 
